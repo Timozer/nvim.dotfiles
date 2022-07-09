@@ -10,7 +10,25 @@ function M.setup()
 
 		-- editing
 		use { 'junegunn/vim-easy-align', config = require('plugins.config.vim_easy_align').config }
-		use { 'numToStr/Comment.nvim', config = function() require('Comment').setup() end }
+		use { 'numToStr/Comment.nvim', config = function() 
+				require('Comment').setup({ mappings = nil })
+				local maps = {
+					{
+						mode = "n",
+						lhs = "<C-_>",
+						rhs = ":lua require('Comment.api').toggle_current_linewise()<cr>",
+						options = {noremap = true}
+					},
+					{
+						mode = "v",
+						lhs = "<C-_>",
+						rhs = '<ESC><CMD>lua require("Comment.api").toggle_linewise_op(vim.fn.visualmode())<CR>',
+						options = {noremap = true}
+					},
+				}
+				require('core').SetKeymaps(maps)
+			end 
+		}
 		use {
 			"windwp/nvim-autopairs",
 			opt = true,
@@ -176,11 +194,11 @@ function M.setup()
 
 		-- git
 		use {
-			'tanvirtin/vgit.nvim',
-			requires = {
-				'nvim-lua/plenary.nvim'
-			},
-			config = function() require('vgit').setup() end
+			'lewis6991/gitsigns.nvim',
+			opt = true,
+			event = {'BufRead', 'BufNewFile' },
+			requires = {'plenary.nvim', opt=true,},
+			config = require('plugins.config.gitsigns').config
 		}
 	end)
 end

@@ -112,7 +112,6 @@ function M.setup()
 				{'hrsh7th/cmp-buffer'},
 				{'hrsh7th/cmp-calc'},
 				{'uga-rosa/cmp-dictionary'},
-				{'f3fora/cmp-spell'},
 
 				-- path
 				{'hrsh7th/cmp-path'},

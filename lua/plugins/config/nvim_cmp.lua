@@ -22,10 +22,6 @@ function M.config()
         vim.cmd [[packadd cmp-dictionary]]
     end
 
-    if not packer_plugins["cmp-spell"].loaded then
-        vim.cmd [[packadd cmp-spell]]
-    end
-
     if not packer_plugins["cmp-path"].loaded then
         vim.cmd [[packadd cmp-path]]
     end
@@ -117,7 +113,6 @@ function M.config()
             { name = 'buffer' },
             { name = 'calc' },
             { name = "dictionary", keyword_length = 2, },
-            { name = 'spell' },
             { name = 'path' },
             { name = 'luasnip' },
             { name = 'nvim_lsp' },
@@ -131,7 +126,6 @@ function M.config()
                 nvim_lsp = "[LSP]",
                 luasnip = "[Snip]",
                 dictionary = "[Dict]",
-                spell = "[Spell]",
                 path = "[Path]",
                 rg = "[RG]",
                 doxygen = "[Doxygen]",

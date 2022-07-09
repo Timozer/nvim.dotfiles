@@ -1,7 +1,6 @@
 local M = {}
 
-function M.config()
-
+function M.setup()
     local maps = {
         -- Telescope lhsmaps
         {
@@ -39,6 +38,15 @@ function M.config()
     }
 
     require('core').SetKeymaps(maps)
+end
+
+function M.config()
+    if not packer_plugins["telescope.nvim"].loaded then
+        vim.cmd [[packadd telescope.nvim]]
+    end
+    if not packer_plugins["telescope-fzf-native.nvim"].loaded then
+        vim.cmd [[packadd telescope-fzf-native.nvim]]
+    end
 
     local actions = require('telescope.actions')
 
@@ -93,6 +101,8 @@ function M.config()
             }
         }
     }
+    
+    require('telescope').load_extension('fzf')
 return maps
 
 end

@@ -16,6 +16,9 @@ function M.config()
     if not packer_plugins["nvim-ts-context-commentstring"].loaded then
         vim.cmd [[packadd nvim-ts-context-commentstring]]
     end
+    if not packer_plugins["nvim-ts-autotag"].loaded then
+        vim.cmd [[packadd nvim-ts-autotag]]
+    end
 
     vim.api.nvim_command('set foldmethod=expr')
     vim.api.nvim_command('set foldexpr=nvim_treesitter#foldexpr()')
@@ -72,7 +75,10 @@ function M.config()
             max_file_lines = 1000 -- Do not enable for files with more than 1000 lines, int
         },
         context_commentstring = {enable = true, enable_autocmd = false},
-        context = {enable = true, throttle = true}
+        context = {enable = true, throttle = true},
+        autotag = {
+            enable = true,
+        }
     }
 end
 

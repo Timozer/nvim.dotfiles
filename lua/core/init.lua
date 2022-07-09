@@ -16,7 +16,7 @@ function M.SetOptions(options)
     end
 
     for key, val in pairs(options) do
-        vim.api.nvim_set_option(key, val)
+        vim.o[key] = val
     end
 end
 

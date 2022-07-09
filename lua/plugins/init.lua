@@ -5,19 +5,35 @@ function M.setup()
 		use { 'nathom/filetype.nvim', }
 		use { 'sainnhe/edge', config = require('plugins.config.edge').config }
 		use { "lukas-reineke/indent-blankline.nvim", config = require('plugins.config.indent_blankline').config }
+		use { 'Timozer/sline.nvim' }
+		use { 'Timozer/ftree.nvim' }
+
+		-- editing
 		use { 'junegunn/vim-easy-align', config = require('plugins.config.vim_easy_align').config }
 		use { 'numToStr/Comment.nvim', config = function() require('Comment').setup() end }
-		use { 'neovim/nvim-lspconfig', require('plugins.config.lspconfig').config }
+		use {
+			"windwp/nvim-autopairs",
+			opt = true,
+			event = {'InsertEnter'},
+			config = function() require("nvim-autopairs").setup {} end
+		}
+
+		use {'nvim-lua/plenary.nvim'}
 		use {
 			'nvim-telescope/telescope.nvim',
-			requires = { {'nvim-lua/plenary.nvim'} },
+			opt = true,
+			cmd = {'Telescope'},
+			requires = { 
+				{'nvim-lua/plenary.nvim'},
+				{
+					'nvim-telescope/telescope-fzf-native.nvim',
+					run = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build',
+				}
+			},
+			setup = require('plugins.config.telescope').setup,
 			config = require('plugins.config.telescope').config
 		}
-		use {
-			'nvim-telescope/telescope-fzf-native.nvim',
-			run = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build',
-			config = function() require('telescope').load_extension('fzf')
-		}
+		-- use {'tzachar/fuzzy.nvim', requires = {'nvim-telescope/telescope-fzf-native.nvim'}}
 
 		use {
 			'nvim-treesitter/nvim-treesitter',
@@ -26,8 +42,145 @@ function M.setup()
 				{'nvim-treesitter/nvim-treesitter-context'},
 				{'JoosepAlviste/nvim-ts-context-commentstring'},
 				{'p00f/nvim-ts-rainbow'},
+				{'windwp/nvim-ts-autotag'},
 			},
 			config = require('plugins.config.treesitter').config
+		}
+
+		-- lsp
+		use { 
+			'neovim/nvim-lspconfig', 
+			opt = true,
+			event = { 'BufEnter' },
+			requires = { 
+				{ "williamboman/nvim-lsp-installer", },
+				{'hrsh7th/cmp-nvim-lsp'}, 
+				{'j-hui/fidget.nvim'},
+			}, 
+			config = require('plugins.config.lspconfig').config 
+		}
+
+		-- auto completion
+		use {
+			'hrsh7th/nvim-cmp',
+			opt = true,
+			event = { 'InsertEnter' },
+			requires = {
+				-- buffer sources
+				{'hrsh7th/cmp-buffer'},
+				{'hrsh7th/cmp-calc'},
+				{'uga-rosa/cmp-dictionary'},
+				{'f3fora/cmp-spell'},
+
+				-- path
+				{'hrsh7th/cmp-path'},
+
+				-- cmdline
+				{'hrsh7th/cmp-cmdline'},
+
+				-- snippets
+				{'saadparwaiz1/cmp_luasnip'},
+
+				-- lsp
+				{'hrsh7th/cmp-nvim-lsp'},
+				{'hrsh7th/cmp-nvim-lsp-document-symbol'},
+				{'hrsh7th/cmp-nvim-lsp-signature-help'},
+
+				-- fuzzy finding
+				{'lukas-reineke/cmp-rg'},
+
+				-- misc
+				{'paopaol/cmp-doxygen'},
+
+				-- kind
+				{'onsails/lspkind.nvim'},
+
+				{'windwp/nvim-autopairs'},
+			},
+			config = require('plugins.config.nvim_cmp').config
+		}
+		use {
+			'L3MON4D3/LuaSnip',
+			opt = true,
+			after = 'nvim-cmp',
+			requires = { 'rafamadriz/friendly-snippets' },
+			config = function()
+				if not packer_plugins["nvim-cmp"].loaded then
+					vim.cmd [[packadd nvim-cmp]]
+				end
+				if not packer_plugins["LuaSnip"].loaded then
+					vim.cmd [[packadd LuaSnip]]
+				end
+				if not packer_plugins["friendly-snippets"].loaded then
+					vim.cmd [[packadd friendly-snippets]]
+				end
+
+				require('luasnip').config.set_config {
+					history = true,
+					updateevents = "TextChanged,TextChangedI"
+				}
+				require("luasnip.loaders.from_vscode").load()
+			end
+		}
+
+		-- term
+		use {
+			'numToStr/FTerm.nvim',
+			opt = true,
+			module = {'FTerm'},
+			setup = function()
+				local maps = {
+					{
+						mode = 'n', lhs = '<A-i>', rhs = '<CMD>lua require("FTerm").toggle()<CR>', options = {noremap = true},
+					},
+					{
+						mode = 't', lhs = '<A-i>', rhs = '<C-\\><C-n><CMD>lua require("FTerm").toggle()<cr>', options = {noremap = true},
+					},
+					{
+						mode = 'n', lhs = '<A-g>', rhs = '', options = {noremap = true, callback = function() 
+							local fterm = require('FTerm')
+							if fterm.term_gitui == nil then
+								fterm.term_gitui = fterm:new({
+									ft = 'TERM_GITUI',
+									cmd = 'gitui',
+									dimensions = {
+										height = 0.9,
+										width = 0.9,
+									}
+								})
+							end
+							fterm.term_gitui:toggle()
+						end},
+					},
+					{
+						mode = 't', lhs = '<A-g>', rhs = '', options = {noremap = true, callback = function() 
+							local fterm = require('FTerm')
+							if fterm.term_gitui ~= nil then
+								fterm.term_gitui:toggle()
+							end
+						end},
+					}
+				}
+				require('core').SetKeymaps(maps)
+			end,
+			config = function()
+				require'FTerm'.setup({
+					border = 'double',
+					dimensions  = {
+						height = 0.9,
+						width = 0.9,
+					},
+				})
+			end
+		}
+
+		-- git
+		use {
+			'tanvirtin/vgit.nvim',
+			requires = {
+				'nvim-lua/plenary.nvim'
+			},
+			config = function() require('vgit').setup() end
 		}
 	end)
 end

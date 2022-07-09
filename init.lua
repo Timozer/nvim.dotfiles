@@ -5,7 +5,7 @@ local basic_opts = {
     scrolloff = 8,
     sidescrolloff = 8,
     number = true,
-    relativenumber = true,
+    relativenumber = false,
     signcolumn = "yes",
     background = "dark",
     termguicolors = true,
@@ -43,136 +43,40 @@ vim.g.did_load_filetypes = 1
 
 local basic_maps = {
 	{
-		mode = "n",
-		lhs = "Y",
-		rhs = "y$",
-		options = {
-			silent = false,
-			noremap = false,
-			nowait = false,
-			expr = false,
-		}
+		mode = "n", lhs = "Y", rhs = "y$", options = { silent = false, noremap = false, nowait = false, expr = false, }
 	},
 	{
-		mode = "n",
-		lhs = "j",
-		rhs = "gj",
-		options = {
-			silent = false,
-			noremap = false,
-			nowait = false,
-			expr = false,
-		}
+		mode = "n", lhs = "j", rhs = "gj", options = { silent = false, noremap = false, nowait = false, expr = false, }
 	},
 	{
-		mode = "n",
-		lhs = "k",
-		rhs = "gk",
-		options = {
-			silent = false,
-			noremap = false,
-			nowait = false,
-			expr = false,
-		}
+		mode = "n", lhs = "k", rhs = "gk", options = { silent = false, noremap = false, nowait = false, expr = false, }
 	},
 	{
-		mode = "n",
-		lhs = "<leader>q",
-		rhs = ":q<CR>",
-		options = {
-			silent = false,
-			noremap = false,
-			nowait = false,
-			expr = false,
-		}
+		mode = "n", lhs = "<leader>q", rhs = ":q<CR>", options = { silent = false, noremap = false, nowait = false, expr = false, }
 	},
 	{
-		mode = "n",
-		lhs = "<leader>w",
-		rhs = ":w!<CR>",
-		options = {
-			silent = false,
-			noremap = false,
-			nowait = false,
-			expr = false,
-		}
+		mode = "n", lhs = "<leader>w", rhs = ":w!<CR>", options = { silent = false, noremap = false, nowait = false, expr = false, }
 	},
 	{
-		mode = "n",
-		lhs = "Q",
-		rhs = ":qa<CR>",
-		options = {
-			silent = false,
-			noremap = false,
-			nowait = false,
-			expr = false,
-		}
+		mode = "n", lhs = "Q", rhs = ":qa<CR>", options = { silent = false, noremap = false, nowait = false, expr = false, }
 	},
 	{
-		mode = "n",
-		lhs = "<leader>lw",
-		rhs = "<C-W>l",
-		options = {
-			silent = false,
-			noremap = true,
-			nowait = false,
-			expr = false,
-		}
+		mode = "n", lhs = "<leader>lw", rhs = "<C-W>l", options = { silent = false, noremap = true, nowait = false, expr = false, }
 	},
 	{
-		mode = "n",
-		lhs = "<leader>hw",
-		rhs = "<C-W>h",
-		options = {
-			silent = false,
-			noremap = true,
-			nowait = false,
-			expr = false,
-		}
+		mode = "n", lhs = "<leader>hw", rhs = "<C-W>h", options = { silent = false, noremap = true, nowait = false, expr = false, }
 	},
 	{
-		mode = "n",
-		lhs = "<leader>jw",
-		rhs = "<C-W>j",
-		options = {
-			silent = false,
-			noremap = true,
-			nowait = false,
-			expr = false,
-		}
+		mode = "n", lhs = "<leader>jw", rhs = "<C-W>j", options = { silent = false, noremap = true, nowait = false, expr = false, }
 	},
 	{
-		mode = "n",
-		lhs = "<leader>kw",
-		rhs = "<C-W>k",
-		options = {
-			silent = false,
-			noremap = true,
-			nowait = false,
-			expr = false,
-		}
+		mode = "n", lhs = "<leader>kw", rhs = "<C-W>k", options = { silent = false, noremap = true, nowait = false, expr = false, }
 	},
 	{
-		mode = "n",
-		lhs = "<C-Right>",
-		rhs = ":vertical resize +10<CR>",
-		options = {
-			silent = false,
-			noremap = true,
-			nowait = false,
-			expr = false,
-		}
+		mode = "n", lhs = "<C-Right>", rhs = ":vertical resize +10<CR>", options = { silent = false, noremap = true, nowait = false, expr = false, }
 	},
 	{
-		mode = "n",
-		lhs = "<C-Left>",
-		rhs = ":vertical resize -10<CR>",
-		options = {
-			silent = false,
-			noremap = true,
-			nowait = false,
-			expr = false,
-		}
+		mode = "n", lhs = "<C-Left>", rhs = ":vertical resize -10<CR>", options = { silent = false, noremap = true, nowait = false, expr = false, }
 	},
 }
 

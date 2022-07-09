@@ -11,7 +11,7 @@ function M.setup()
 				require('sline').setup({
 					data = {
 						{
-							"%#SlineFilename#%{%v:lua.require('sline.components').Filename('relative')%}%#SlineFileStatus#%m%r %#SlineDefault#%{get(b:,'gitsigns_status','')}"
+							"%#SlineFilename#%{%v:lua.require('sline.components').Filename('relative')%}%#SlineFileStatus#%m%r %#SlineDefault#%{get(g:,'gitsigns_head','')} %{get(b:,'gitsigns_status','')}"
 						},
 						{
 							"%#SlineFiletype#",

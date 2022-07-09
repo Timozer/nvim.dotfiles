@@ -32,6 +32,9 @@ function M.setup()
 		}
 		use { 'Timozer/ftree.nvim' }
 
+		-- for vim.ui.{input, select}
+		use {'stevearc/dressing.nvim', config = require('plugins.config.dressing').config }
+
 		-- editing
 		use { 'junegunn/vim-easy-align', config = require('plugins.config.vim_easy_align').config }
 		use { 'numToStr/Comment.nvim', config = function()
@@ -65,6 +68,7 @@ function M.setup()
 			'nvim-telescope/telescope.nvim',
 			opt = true,
 			cmd = {'Telescope'},
+			module = {'telescope'},
 			requires = {
 				{'nvim-lua/plenary.nvim'},
 				{
@@ -220,9 +224,10 @@ function M.setup()
 			'lewis6991/gitsigns.nvim',
 			opt = true,
 			event = {'BufRead', 'BufNewFile' },
-			requires = {'plenary.nvim', opt=true,},
+			requires = {'nvim-lua/plenary.nvim', opt=true,},
 			config = require('plugins.config.gitsigns').config
 		}
+		use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' }
 	end)
 end
 

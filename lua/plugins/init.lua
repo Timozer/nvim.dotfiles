@@ -5,12 +5,36 @@ function M.setup()
 		use { 'nathom/filetype.nvim', }
 		use { 'sainnhe/edge', config = require('plugins.config.edge').config }
 		use { "lukas-reineke/indent-blankline.nvim", config = require('plugins.config.indent_blankline').config }
-		use { 'Timozer/sline.nvim' }
+		use {
+			'Timozer/sline.nvim', 
+			config = function()
+				require('sline').setup({
+					data = {
+						{
+							"%#SlineFilename#%{%v:lua.require('sline.components').Filename('relative')%}%#SlineFileStatus#%m%r %#SlineDefault#%{get(b:,'gitsigns_status','')}"
+						},
+						{
+							"%#SlineFiletype#",
+							require("sline.components").Filetype,
+							"%#SlineFileformat#",
+							require("sline.components").Fileformat,
+							"%#SlineEncoding#",
+							require("sline.components").Encoding,
+							"%#SlineLocation#",
+							"%3p%% : %l/%L,%c"
+						},
+					},
+					disabled_filetypes = {
+						"FTree"
+					}
+				})
+			end
+		}
 		use { 'Timozer/ftree.nvim' }
 
 		-- editing
 		use { 'junegunn/vim-easy-align', config = require('plugins.config.vim_easy_align').config }
-		use { 'numToStr/Comment.nvim', config = function() 
+		use { 'numToStr/Comment.nvim', config = function()
 				require('Comment').setup({ mappings = nil })
 				local maps = {
 					{
@@ -27,7 +51,7 @@ function M.setup()
 					},
 				}
 				require('core').SetKeymaps(maps)
-			end 
+			end
 		}
 		use {
 			"windwp/nvim-autopairs",
@@ -41,7 +65,7 @@ function M.setup()
 			'nvim-telescope/telescope.nvim',
 			opt = true,
 			cmd = {'Telescope'},
-			requires = { 
+			requires = {
 				{'nvim-lua/plenary.nvim'},
 				{
 					'nvim-telescope/telescope-fzf-native.nvim',
@@ -66,16 +90,16 @@ function M.setup()
 		}
 
 		-- lsp
-		use { 
-			'neovim/nvim-lspconfig', 
+		use {
+			'neovim/nvim-lspconfig',
 			opt = true,
 			event = { 'BufEnter' },
-			requires = { 
+			requires = {
 				{ "williamboman/nvim-lsp-installer", },
-				{'hrsh7th/cmp-nvim-lsp'}, 
+				{'hrsh7th/cmp-nvim-lsp'},
 				{'j-hui/fidget.nvim'},
-			}, 
-			config = require('plugins.config.lspconfig').config 
+			},
+			config = require('plugins.config.lspconfig').config
 		}
 
 		-- auto completion
@@ -155,7 +179,7 @@ function M.setup()
 						mode = 't', lhs = '<A-i>', rhs = '<C-\\><C-n><CMD>lua require("FTerm").toggle()<cr>', options = {noremap = true},
 					},
 					{
-						mode = 'n', lhs = '<A-g>', rhs = '', options = {noremap = true, callback = function() 
+						mode = 'n', lhs = '<A-g>', rhs = '', options = {noremap = true, callback = function()
 							local fterm = require('FTerm')
 							if fterm.term_gitui == nil then
 								fterm.term_gitui = fterm:new({
@@ -171,7 +195,7 @@ function M.setup()
 						end},
 					},
 					{
-						mode = 't', lhs = '<A-g>', rhs = '', options = {noremap = true, callback = function() 
+						mode = 't', lhs = '<A-g>', rhs = '', options = {noremap = true, callback = function()
 							local fterm = require('FTerm')
 							if fterm.term_gitui ~= nil then
 								fterm.term_gitui:toggle()

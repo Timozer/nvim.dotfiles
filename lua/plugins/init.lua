@@ -1,6 +1,14 @@
 local M = {}
 
 function M.setup()
+    require('packer').init({
+        display = {
+            open_fn = function ()
+                return require('packer.util').float({border = "rounded"})
+            end
+        }
+    })
+
 	require('packer').startup(function(use)
 		use { 'nathom/filetype.nvim', }
 		use { 'sainnhe/edge', config = require('plugins.config.edge').config }

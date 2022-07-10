@@ -32,9 +32,6 @@ function M.setup()
 		}
 		use { 'Timozer/ftree.nvim' }
 
-		-- for vim.ui.{input, select}
-		use {'stevearc/dressing.nvim', config = require('plugins.config.dressing').config }
-
 		-- editing
 		use { 'junegunn/vim-easy-align', config = require('plugins.config.vim_easy_align').config }
 		use { 'numToStr/Comment.nvim', config = function()
@@ -68,8 +65,9 @@ function M.setup()
 			'nvim-telescope/telescope.nvim',
 			opt = true,
 			cmd = {'Telescope'},
-			module = {'telescope'},
 			requires = {
+                -- for vim.ui.{input, select}
+                {'stevearc/dressing.nvim'},
 				{'nvim-lua/plenary.nvim'},
 				{
 					'nvim-telescope/telescope-fzf-native.nvim',

@@ -6,7 +6,7 @@ function M.setup()
 		use { 'sainnhe/edge', config = require('plugins.config.edge').config }
 		use { "lukas-reineke/indent-blankline.nvim", config = require('plugins.config.indent_blankline').config }
 		use {
-			'Timozer/sline.nvim', 
+			'Timozer/sline.nvim',
 			config = function()
 				require('sline').setup({
 					data = {
@@ -30,7 +30,13 @@ function M.setup()
 				})
 			end
 		}
-		use { 'Timozer/ftree.nvim' }
+		use {
+            'Timozer/ftree.nvim',
+            opt = true,
+            cmd = {'FTreeToggle', 'FTreeFocus'},
+            setup = require("plugins.config.ftree").setup,
+            config = require("plugins.config.ftree").config,
+        }
 
 		-- editing
 		use { 'junegunn/vim-easy-align', config = require('plugins.config.vim_easy_align').config }

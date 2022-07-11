@@ -73,10 +73,10 @@ local basic_maps = {
 		mode = "n", lhs = "<leader>kw", rhs = "<C-W>k", options = { silent = false, noremap = true, nowait = false, expr = false, }
 	},
 	{
-		mode = "n", lhs = "<C-Right>", rhs = ":vertical resize +10<CR>", options = { silent = false, noremap = true, nowait = false, expr = false, }
+		mode = "n", lhs = "<A-Right>", rhs = ":vertical resize +10<CR>", options = { silent = false, noremap = true, nowait = false, expr = false, }
 	},
 	{
-		mode = "n", lhs = "<C-Left>", rhs = ":vertical resize -10<CR>", options = { silent = false, noremap = true, nowait = false, expr = false, }
+		mode = "n", lhs = "<A-Left>", rhs = ":vertical resize -10<CR>", options = { silent = false, noremap = true, nowait = false, expr = false, }
 	},
 }
 

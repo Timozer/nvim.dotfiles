@@ -18,10 +18,6 @@ function M.config()
         vim.cmd [[packadd cmp-calc]]
     end
 
-    if not packer_plugins["cmp-dictionary"].loaded then
-        vim.cmd [[packadd cmp-dictionary]]
-    end
-
     if not packer_plugins["cmp-path"].loaded then
         vim.cmd [[packadd cmp-path]]
     end
@@ -44,14 +40,6 @@ function M.config()
 
     if not packer_plugins["cmp-nvim-lsp-signature-help"].loaded then
         vim.cmd [[packadd cmp-nvim-lsp-signature-help]]
-    end
-
-    if not packer_plugins["cmp-rg"].loaded then
-        vim.cmd [[packadd cmp-rg]]
-    end
-
-    if not packer_plugins["cmp-doxygen"].loaded then
-        vim.cmd [[packadd cmp-doxygen]]
     end
 
     if not packer_plugins["lspkind.nvim"].loaded then
@@ -112,51 +100,20 @@ function M.config()
         sources = cmp.config.sources({
             { name = 'buffer' },
             { name = 'calc' },
-            { name = "dictionary", keyword_length = 2, },
             { name = 'path' },
             { name = 'luasnip' },
             { name = 'nvim_lsp' },
             { name = 'nvim_lsp_signature_help' },
-            { name = 'rg' },
-            { name = 'doxygen' },
         }),
         formatting = {
             format = require("lspkind").cmp_format({with_text = false, menu = ({
                 buffer = "[Buf]",
                 nvim_lsp = "[LSP]",
                 luasnip = "[Snip]",
-                dictionary = "[Dict]",
                 path = "[Path]",
-                rg = "[RG]",
-                doxygen = "[Doxygen]",
             })}),
         }
     })
-
-    require("cmp_dictionary").setup({
-		dic = {
-			["*"] = { "/usr/share/dict/words" },
-			["lua"] = "path/to/lua.dic",
-			["javascript,typescript"] = { "path/to/js.dic", "path/to/js2.dic" },
-			filename = {
-				["xmake.lua"] = { "path/to/xmake.dic", "path/to/lua.dic" },
-			},
-			filepath = {
-				["%.tmux.*%.conf"] = "path/to/tmux.dic"
-			},
-			spelllang = {
-				en = "path/to/english.dic",
-			},
-		},
-		-- The following are default values.
-		exact = 2,
-		first_case_insensitive = false,
-		document = false,
-		document_command = "wn %s -over",
-		async = false, 
-		capacity = 5,
-		debug = false,
-	})
 
     -- for spell
     vim.opt.spell = true

@@ -17,7 +17,7 @@ function M.config()
     local lsps = {
         'bashls',
         'clangd',
-        'cmake',
+        -- 'cmake',
         'dockerls',
         'gopls',
         'jsonls',

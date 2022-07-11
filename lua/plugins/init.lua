@@ -127,7 +127,6 @@ function M.setup()
 				-- buffer sources
 				{'hrsh7th/cmp-buffer'},
 				{'hrsh7th/cmp-calc'},
-				{'uga-rosa/cmp-dictionary'},
 
 				-- path
 				{'hrsh7th/cmp-path'},
@@ -142,12 +141,6 @@ function M.setup()
 				{'hrsh7th/cmp-nvim-lsp'},
 				{'hrsh7th/cmp-nvim-lsp-document-symbol'},
 				{'hrsh7th/cmp-nvim-lsp-signature-help'},
-
-				-- fuzzy finding
-				{'lukas-reineke/cmp-rg'},
-
-				-- misc
-				{'paopaol/cmp-doxygen'},
 
 				-- kind
 				{'onsails/lspkind.nvim'},

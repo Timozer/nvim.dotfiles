@@ -8,6 +8,7 @@ end
 function M.config()
     local cmp = require'cmp'
 
+    -- TODO: sorting complete items
     cmp.setup({
         snippet = {
             expand = function(args) require('luasnip').lsp_expand(args.body) end,
@@ -67,6 +68,7 @@ function M.config()
             { name = 'luasnip' },
             { name = 'nvim_lsp' },
             { name = 'nvim_lsp_signature_help' },
+            { name = 'treesitter' },
         }),
         formatting = {
             format = require("lspkind").cmp_format({with_text = false, menu = ({

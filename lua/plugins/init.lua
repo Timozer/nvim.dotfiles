@@ -134,6 +134,12 @@ function M.setup()
 				{'hrsh7th/cmp-nvim-lsp-document-symbol'},
 				{'hrsh7th/cmp-nvim-lsp-signature-help'},
 
+				-- ai
+				-- { 'vappolinario/cmp-clippy' },
+
+				-- treesitter
+				{'ray-x/cmp-treesitter'},
+
 				-- kind
 				{'onsails/lspkind.nvim'},
 
@@ -141,6 +147,7 @@ function M.setup()
 
 				-- snippets
 				{'saadparwaiz1/cmp_luasnip'},
+				-- {'L3MON4D3/cmp-luasnip-choice'},
 				{
 					'L3MON4D3/LuaSnip',
 					build = 'make install_jsregexp',

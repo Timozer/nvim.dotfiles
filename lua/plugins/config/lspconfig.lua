@@ -1,19 +1,6 @@
 local M = {}
 
 function M.config()
-    if not packer_plugins["nvim-lsp-installer"].loaded then
-        vim.cmd [[packadd nvim-lsp-installer]]
-    end
-    if not packer_plugins["cmp-nvim-lsp"].loaded then
-        vim.cmd [[packadd cmp-nvim-lsp]]
-    end
-    if not packer_plugins["fidget.nvim"].loaded then
-        vim.cmd [[packadd fidget.nvim]]
-    end
-    if not packer_plugins["nvim-lspconfig"].loaded then
-        vim.cmd [[packadd nvim-lspconfig]]
-    end
-
     local lsps = {
         'bashls',
         'clangd',

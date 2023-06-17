@@ -1,19 +1,25 @@
 local M = {}
 
 function M.setup()
-    require('packer').init({
-        display = {
-            open_fn = function ()
-                return require('packer.util').float({border = "rounded"})
-            end
-        }
-    })
+	local lazypath = vim.fn.stdpath("data") .. "/folke/lazy.nvim"
+	if not vim.loop.fs_stat(lazypath) then
+		vim.fn.system({
+			"git",
+			"clone",
+			"--filter=blob:none",
+			"https://github.com/folke/lazy.nvim.git",
+			"--branch=stable", -- latest stable release
+			lazypath,
+		})
+	end
+	vim.opt.rtp:prepend(lazypath)	
 
-	require('packer').startup(function(use)
-		use { 'nathom/filetype.nvim', }
-		use { 'sainnhe/edge', config = require('plugins.config.edge').config }
-		use { "lukas-reineke/indent-blankline.nvim", config = require('plugins.config.indent_blankline').config }
-		use {
+	require("lazy").setup({
+		-- plugins
+		{ "nathom/filetype.nvim" },
+		{ 'sainnhe/edge', config = require('plugins.config.edge').config },
+		{ "lukas-reineke/indent-blankline.nvim", config = require('plugins.config.indent_blankline').config },
+		{
 			'Timozer/sline.nvim',
 			config = function()
 				require('sline').setup({
@@ -37,18 +43,16 @@ function M.setup()
 					}
 				})
 			end
-		}
-		use {
+		},
+		{
             'Timozer/ftree.nvim',
-            opt = true,
             cmd = {'FTreeToggle', 'FTreeFocus'},
-            setup = require("plugins.config.ftree").setup,
+            init = require("plugins.config.ftree").setup,
             config = require("plugins.config.ftree").config,
-        }
-
+        },
 		-- editing
-		use { 'junegunn/vim-easy-align', config = require('plugins.config.vim_easy_align').config }
-		use { 'numToStr/Comment.nvim', config = function()
+		{ 'junegunn/vim-easy-align', config = require('plugins.config.vim_easy_align').config },
+		{ 'numToStr/Comment.nvim', config = function()
 				require('Comment').setup({ mappings = nil })
 				local maps = {
 					{
@@ -66,36 +70,31 @@ function M.setup()
 				}
 				require('core').SetKeymaps(maps)
 			end
-		}
-		use {
+		},
+		{
 			"windwp/nvim-autopairs",
-			opt = true,
 			event = {'InsertEnter'},
 			config = function() require("nvim-autopairs").setup {} end
-		}
-
-		use {'nvim-lua/plenary.nvim'}
-		use {
+		},
+		{'nvim-lua/plenary.nvim'},
+		{
 			'nvim-telescope/telescope.nvim',
-			opt = true,
 			cmd = {'Telescope'},
-			requires = {
+			dependencies = {
                 -- for vim.ui.{input, select}
                 {'stevearc/dressing.nvim'},
 				{'nvim-lua/plenary.nvim'},
 				{
 					'nvim-telescope/telescope-fzf-native.nvim',
-					run = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build',
+					build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build',
 				}
 			},
-			setup = require('plugins.config.telescope').setup,
+			init = require('plugins.config.telescope').setup,
 			config = require('plugins.config.telescope').config
-		}
-		-- use {'tzachar/fuzzy.nvim', requires = {'nvim-telescope/telescope-fzf-native.nvim'}}
-
-		use {
+		},
+		{
 			'nvim-treesitter/nvim-treesitter',
-			requires = {
+			dependencies = {
 				{'nvim-treesitter/nvim-treesitter-textobjects'},
 				{'nvim-treesitter/nvim-treesitter-context'},
 				{'JoosepAlviste/nvim-ts-context-commentstring'},
@@ -103,27 +102,23 @@ function M.setup()
 				{'windwp/nvim-ts-autotag'},
 			},
 			config = require('plugins.config.treesitter').config
-		}
-
+		},
 		-- lsp
-		use {
+		{
 			'neovim/nvim-lspconfig',
-			opt = true,
 			event = { 'BufEnter' },
-			requires = {
+			dependencies = {
 				{ "williamboman/nvim-lsp-installer", },
 				{'hrsh7th/cmp-nvim-lsp'},
 				{'j-hui/fidget.nvim'},
 			},
 			config = require('plugins.config.lspconfig').config
-		}
-
+		},
 		-- auto completion
-		use {
+		{
 			'hrsh7th/nvim-cmp',
-			opt = true,
 			event = { 'InsertEnter' },
-			requires = {
+			dependencies = {
 				-- buffer sources
 				{'hrsh7th/cmp-buffer'},
 				{'hrsh7th/cmp-calc'},
@@ -148,37 +143,25 @@ function M.setup()
 				{'windwp/nvim-autopairs'},
 			},
 			config = require('plugins.config.nvim_cmp').config
-		}
-		use {
+		},
+		{
 			'L3MON4D3/LuaSnip',
-			opt = true,
 			after = 'nvim-cmp',
-			requires = { 'rafamadriz/friendly-snippets' },
+			dependencies = { 'rafamadriz/friendly-snippets' },
 			config = function()
-				if not packer_plugins["nvim-cmp"].loaded then
-					vim.cmd [[packadd nvim-cmp]]
-				end
-				if not packer_plugins["LuaSnip"].loaded then
-					vim.cmd [[packadd LuaSnip]]
-				end
-				if not packer_plugins["friendly-snippets"].loaded then
-					vim.cmd [[packadd friendly-snippets]]
-				end
-
 				require('luasnip').config.set_config {
 					history = true,
 					updateevents = "TextChanged,TextChangedI"
 				}
 				require("luasnip.loaders.from_vscode").load()
 			end
-		}
+		},
 
 		-- term
-		use {
+		{
 			'numToStr/FTerm.nvim',
-			opt = true,
 			module = {'FTerm'},
-			setup = function()
+			init = function()
 				local maps = {
 					{
 						mode = 'n', lhs = '<A-i>', rhs = '<CMD>lua require("FTerm").toggle()<CR>', options = {noremap = true},
@@ -222,18 +205,19 @@ function M.setup()
 					},
 				})
 			end
-		}
+		},
 
 		-- git
-		use {
+		{
 			'lewis6991/gitsigns.nvim',
-			opt = true,
 			event = {'BufRead', 'BufNewFile' },
-			requires = {'nvim-lua/plenary.nvim', opt=true,},
+			dependencies = {'nvim-lua/plenary.nvim'},
 			config = require('plugins.config.gitsigns').config
-		}
-		use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' }
-	end)
+		},
+		{ 'sindrets/diffview.nvim', dependencies = 'nvim-lua/plenary.nvim' }
+	}, {
+		-- opts
+	})
 end
 
 return M

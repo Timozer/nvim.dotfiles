@@ -6,50 +6,6 @@ local has_words_before = function()
 end
 
 function M.config()
-    if not packer_plugins["nvim-cmp"].loaded then
-        vim.cmd [[packadd nvim-cmp]]
-    end
-
-    if not packer_plugins["cmp-buffer"].loaded then
-        vim.cmd [[packadd cmp-buffer]]
-    end
-
-    if not packer_plugins["cmp-calc"].loaded then
-        vim.cmd [[packadd cmp-calc]]
-    end
-
-    if not packer_plugins["cmp-path"].loaded then
-        vim.cmd [[packadd cmp-path]]
-    end
-
-    if not packer_plugins["cmp-cmdline"].loaded then
-        vim.cmd [[packadd cmp-cmdline]]
-    end
-
-    if not packer_plugins["cmp_luasnip"].loaded then
-        vim.cmd [[packadd cmp_luasnip]]
-    end
-
-    if not packer_plugins["cmp-nvim-lsp"].loaded then
-        vim.cmd [[packadd cmp-nvim-lsp]]
-    end
-
-    if not packer_plugins["cmp-nvim-lsp-document-symbol"].loaded then
-        vim.cmd [[packadd cmp-nvim-lsp-document-symbol]]
-    end
-
-    if not packer_plugins["cmp-nvim-lsp-signature-help"].loaded then
-        vim.cmd [[packadd cmp-nvim-lsp-signature-help]]
-    end
-
-    if not packer_plugins["lspkind.nvim"].loaded then
-        vim.cmd [[packadd lspkind.nvim]]
-    end
-
-    if not packer_plugins["nvim-autopairs"].loaded then
-        vim.cmd [[packadd nvim-autopairs]]
-    end
-
     local cmp = require'cmp'
 
     cmp.setup({

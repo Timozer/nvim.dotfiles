@@ -6,10 +6,6 @@ function M.setup()
 end
 
 function M.config()
-    if not packer_plugins["ftree.nvim"].loaded then
-        vim.cmd [[packadd ftree.nvim]]
-    end
-
     local renderer = require("ftree.renderer")
     local actions = require("ftree.actions")
 

@@ -41,12 +41,6 @@ function M.setup()
 end
 
 function M.config()
-    if not packer_plugins["telescope.nvim"].loaded then
-        vim.cmd [[packadd telescope.nvim]]
-    end
-    if not packer_plugins["telescope-fzf-native.nvim"].loaded then
-        vim.cmd [[packadd telescope-fzf-native.nvim]]
-    end
     local actions = require('telescope.actions')
 
     require('telescope').setup{
@@ -102,10 +96,6 @@ function M.config()
     }
 
     require('telescope').load_extension('fzf')
-
-    if not packer_plugins["dressing.nvim"].loaded then
-        vim.cmd [[packadd dressing.nvim]]
-    end
 
     require('dressing').setup({
         input = {

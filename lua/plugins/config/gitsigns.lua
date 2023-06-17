@@ -1,9 +1,6 @@
 local M = {}
 
 function M.config()
-    if not packer_plugins["plenary.nvim"].loaded then
-        vim.cmd [[packadd plenary.nvim]]
-    end
     require('gitsigns').setup {
         signs = {
             add          = {hl = 'GitSignsAdd'   , text = '│', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'},

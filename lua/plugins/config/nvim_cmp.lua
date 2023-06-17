@@ -19,9 +19,11 @@ function M.config()
                     cmp.select_next_item()
                 elseif require('luasnip').expand_or_jumpable() then
                     require('luasnip').expand_or_jump()
+                elseif has_words_before() then
+                    cmp.complete()
                 else
-                    vim.api.nvim_eval([[feedkeys("\<tab>", "n")]])
-                    -- fallback()
+                    -- vim.api.nvim_eval([[feedkeys("\<tab>", "n")]])
+                    fallback()
                 end
             end, { "i", "s" }),
             ["<S-Tab>"] = cmp.mapping(function(fallback)
@@ -30,7 +32,8 @@ function M.config()
                 elseif require('luasnip').jumpable(-1) then
                     require('luasnip').jump(-1)
                 else
-                    vim.api.nvim_eval([[feedkeys("\<s-tab>", "n")]])
+                    -- vim.api.nvim_eval([[feedkeys("\<s-tab>", "n")]])
+                    fallback()
                 end
             end, { "i", "s" }),
             ['<PageUp>']   = cmp.mapping(cmp.mapping.scroll_docs(-10), { 'i', 'c' }),
@@ -54,7 +57,11 @@ function M.config()
             ['<C-f>']      = cmp.config.disable,
         },
         sources = cmp.config.sources({
-            { name = 'buffer' },
+            { name = 'buffer', option = {
+                get_bufnrs = function()
+                    return vim.api.nvim_list_bufs()
+                end
+            } },
             { name = 'calc' },
             { name = 'path' },
             { name = 'luasnip' },
@@ -75,17 +82,30 @@ function M.config()
     vim.opt.spell = true
     vim.opt.spelllang = { 'en_us' }
 
-    -- {{ for cmdline
-    -- require'cmp'.setup.cmdline(':', {
-    --     sources = { { name = 'cmdline' } }
-    -- })
 
-    -- require'cmp'.setup.cmdline('/', {
-    --     sources = cmp.config.sources(
-    --         { { name = 'nvim_lsp_document_symbol' } }, 
-    --         { { name = 'buffer' } }
-    --     )
-    -- })
+    -- {{ for cmdline
+
+    cmp.setup.cmdline('/', {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = cmp.config.sources(
+            { { name = 'nvim_lsp_document_symbol' } }, 
+            { { name = 'buffer' } }
+        )
+    })
+
+    cmp.setup.cmdline(':', {
+      mapping = cmp.mapping.preset.cmdline(),
+      sources = cmp.config.sources({
+        { name = 'path' }
+      }, {
+        {
+          name = 'cmdline',
+          option = {
+            ignore_cmds = { 'Man', '!' }
+          }
+        }
+      })
+    })
 
     -- }}
 

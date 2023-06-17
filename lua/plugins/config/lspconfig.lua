@@ -8,13 +8,11 @@ function M.config()
         'dockerls',
         'gopls',
         'jsonls',
-        'sumneko_lua',
+        'lua_ls',
         'pyright'
     }
-    require("nvim-lsp-installer").setup({
-        ensure_installed = lsps,
-        automatic_installation = false,
-    })
+    require("mason").setup()
+    require("mason-lspconfig").setup({ ensure_installed = lsps })
 
     local lsp_attach = function (client)
         vim.api.nvim_buf_set_keymap(0, "n", "gD", ":lua vim.lsp.buf.declaration()<cr>", {noremap=true, silent=true})
@@ -32,9 +30,7 @@ function M.config()
     end
 
     local lspconfig = require('lspconfig')
-    local cpb = vim.lsp.protocol.make_client_capabilities()
-    cpb = require('cmp_nvim_lsp').update_capabilities(cpb)
-
+    local cpb = require('cmp_nvim_lsp').default_capabilities()
     for _, lsp in ipairs(lsps) do
         lspconfig[lsp].setup({
             on_attach = lsp_attach,

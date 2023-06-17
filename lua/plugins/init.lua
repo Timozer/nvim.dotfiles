@@ -76,7 +76,6 @@ function M.setup()
 			event = {'InsertEnter'},
 			config = function() require("nvim-autopairs").setup {} end
 		},
-		{'nvim-lua/plenary.nvim'},
 		{
 			'nvim-telescope/telescope.nvim',
 			cmd = {'Telescope'},
@@ -108,9 +107,10 @@ function M.setup()
 			'neovim/nvim-lspconfig',
 			event = { 'BufEnter' },
 			dependencies = {
-				{ "williamboman/nvim-lsp-installer", },
+				{ "williamboman/mason.nvim", build = ":MasonUpdate", config = function() end },
+				{ 'williamboman/mason-lspconfig.nvim', config = function() end },
 				{'hrsh7th/cmp-nvim-lsp'},
-				{'j-hui/fidget.nvim'},
+				{'j-hui/fidget.nvim', tag = 'legacy'},
 			},
 			config = require('plugins.config.lspconfig').config
 		},
@@ -129,9 +129,6 @@ function M.setup()
 				-- cmdline
 				{'hrsh7th/cmp-cmdline'},
 
-				-- snippets
-				{'saadparwaiz1/cmp_luasnip'},
-
 				-- lsp
 				{'hrsh7th/cmp-nvim-lsp'},
 				{'hrsh7th/cmp-nvim-lsp-document-symbol'},
@@ -141,68 +138,53 @@ function M.setup()
 				{'onsails/lspkind.nvim'},
 
 				{'windwp/nvim-autopairs'},
+
+				-- snippets
+				{'saadparwaiz1/cmp_luasnip'},
+				{
+					'L3MON4D3/LuaSnip',
+					build = 'make install_jsregexp',
+					dependencies = { 'rafamadriz/friendly-snippets' },
+					config = require('plugins.config.luasnip').config
+				},
 			},
 			config = require('plugins.config.nvim_cmp').config
-		},
-		{
-			'L3MON4D3/LuaSnip',
-			after = 'nvim-cmp',
-			dependencies = { 'rafamadriz/friendly-snippets' },
-			config = function()
-				require('luasnip').config.set_config {
-					history = true,
-					updateevents = "TextChanged,TextChangedI"
-				}
-				require("luasnip.loaders.from_vscode").load()
-			end
 		},
 
 		-- term
 		{
 			'numToStr/FTerm.nvim',
-			module = {'FTerm'},
-			init = function()
-				local maps = {
-					{
-						mode = 'n', lhs = '<A-i>', rhs = '<CMD>lua require("FTerm").toggle()<CR>', options = {noremap = true},
-					},
-					{
-						mode = 't', lhs = '<A-i>', rhs = '<C-\\><C-n><CMD>lua require("FTerm").toggle()<cr>', options = {noremap = true},
-					},
-					{
-						mode = 'n', lhs = '<A-g>', rhs = '', options = {noremap = true, callback = function()
+			keys = {
+				{'<A-i>', '<CMD>lua require("FTerm").toggle()<CR>', mode = 'n', noremap = true},
+				{'<A-i>', '<C-\\><C-n><CMD>lua require("FTerm").toggle()<cr>', mode = 't', noremap = true},
+				{
+					'<A-g>', 
+					function()
 							local fterm = require('FTerm')
 							if fterm.term_gitui == nil then
 								fterm.term_gitui = fterm:new({
 									ft = 'TERM_GITUI',
 									cmd = 'gitui',
-									dimensions = {
-										height = 0.9,
-										width = 0.9,
-									}
+									dimensions = { height = 0.9, width = 0.9, }
 								})
 							end
 							fterm.term_gitui:toggle()
-						end},
-					},
-					{
-						mode = 't', lhs = '<A-g>', rhs = '', options = {noremap = true, callback = function()
+					end, mode = 'n', noremap = true
+				},
+				{
+					'<A-g>', 
+					function()
 							local fterm = require('FTerm')
 							if fterm.term_gitui ~= nil then
 								fterm.term_gitui:toggle()
 							end
-						end},
-					}
-				}
-				require('core').SetKeymaps(maps)
-			end,
+					end, mode = 't', noremap = true
+				},
+			},
 			config = function()
 				require'FTerm'.setup({
 					border = 'double',
-					dimensions  = {
-						height = 0.9,
-						width = 0.9,
-					},
+					dimensions  = { height = 0.9, width = 0.9, },
 				})
 			end
 		},
@@ -214,7 +196,11 @@ function M.setup()
 			dependencies = {'nvim-lua/plenary.nvim'},
 			config = require('plugins.config.gitsigns').config
 		},
-		{ 'sindrets/diffview.nvim', dependencies = 'nvim-lua/plenary.nvim' }
+		{ 
+			'sindrets/diffview.nvim', 
+			dependencies = 'nvim-lua/plenary.nvim',
+			cmd = { 'DiffviewFileHistory', 'DiffviewOpen', 'DiffviewFocusFiles', }
+		}
 	}, {
 		-- opts
 	})

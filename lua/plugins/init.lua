@@ -52,24 +52,12 @@ function M.setup()
         },
 		-- editing
 		{ 'junegunn/vim-easy-align', config = require('plugins.config.vim_easy_align').config },
-		{ 'numToStr/Comment.nvim', config = function()
-				require('Comment').setup({ mappings = nil })
-				local maps = {
-					{
-						mode = "n",
-						lhs = "<C-_>",
-						rhs = ":lua require('Comment.api').toggle_current_linewise()<cr>",
-						options = {noremap = true}
-					},
-					{
-						mode = "v",
-						lhs = "<C-_>",
-						rhs = '<ESC><CMD>lua require("Comment.api").toggle_linewise_op(vim.fn.visualmode())<CR>',
-						options = {noremap = true}
-					},
-				}
-				require('core').SetKeymaps(maps)
-			end
+		{ 'numToStr/Comment.nvim', 
+			keys = {
+				{ "<C-_>", ":lua require('Comment.api').toggle.linewise.current()<cr>", mode = 'n', noremap = true },
+				{ "<C-_>", '<ESC><CMD>lua require("Comment.api").toggle.linewise(vim.fn.visualmode())<CR>', mode = 'v', noremap = true },
+			},
+			config = function() require('Comment').setup({mappings = nil}) end
 		},
 		{
 			"windwp/nvim-autopairs",
@@ -79,6 +67,13 @@ function M.setup()
 		{
 			'nvim-telescope/telescope.nvim',
 			cmd = {'Telescope'},
+			keys = {
+				{ "<leader>ff", ":Telescope find_files<cr>", mode = 'n', noremap = true },
+				{ "<leader>fb", ":Telescope buffers<cr>", mode = 'n', noremap = true },
+				{ "<leader>fg", ":Telescope live_grep<cr>", mode = 'n', noremap = true },
+				{ "<leader>fh", ":Telescope help_tags<cr>", mode = 'n', noremap = true },
+				{ "<leader>fs", ":Telescope grep_string<cr>", mode = 'n', noremap = true },
+			},
 			dependencies = {
                 -- for vim.ui.{input, select}
                 {'stevearc/dressing.nvim'},
@@ -88,7 +83,6 @@ function M.setup()
 					build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build',
 				}
 			},
-			init = require('plugins.config.telescope').setup,
 			config = require('plugins.config.telescope').config
 		},
 		{

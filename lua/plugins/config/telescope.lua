@@ -1,45 +1,5 @@
 local M = {}
 
-function M.setup()
-    local maps = {
-        -- Telescope lhsmaps
-        {
-            mode = "n",
-            lhs = "<leader>ff",
-            rhs = ":Telescope find_files<cr>",
-            options = {
-                noremap = true,
-            }
-        },
-        {
-            mode = "n",
-            lhs = "<leader>fb",
-            rhs = ":Telescope buffers<cr>",
-            options = {
-                noremap = true,
-            }
-        },
-        {
-            mode = "n",
-            lhs = "<leader>fg",
-            rhs = ":Telescope live_grep<cr>",
-            options = {
-                noremap = true,
-            }
-        },
-        {
-            mode = "n",
-            lhs = "<leader>fh",
-            rhs = ":Telescope help_tags<cr>",
-            options = {
-                noremap = true,
-            }
-        },
-    }
-
-    require('core').SetKeymaps(maps)
-end
-
 function M.config()
     local actions = require('telescope.actions')
 

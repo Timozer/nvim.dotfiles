@@ -16,7 +16,7 @@ function M.setup()
 
 	require("lazy").setup({
 		-- plugins
-		{ "nathom/filetype.nvim" },
+		{ "nathom/filetype.nvim", config = require('plugins.config.filetype').config },
 		{ 'sainnhe/edge', config = require('plugins.config.edge').config },
 		{ "lukas-reineke/indent-blankline.nvim", config = require('plugins.config.indent_blankline').config },
 		{

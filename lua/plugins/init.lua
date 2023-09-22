@@ -7,7 +7,7 @@ function M.setup()
 			"git",
 			"clone",
 			"--filter=blob:none",
-			"https://github.com/folke/lazy.nvim.git",
+			"https://ghproxy.com/https://github.com/folke/lazy.nvim.git",
 			"--branch=stable", -- latest stable release
 			lazypath,
 		})
@@ -101,7 +101,13 @@ function M.setup()
 			'neovim/nvim-lspconfig',
 			event = { 'BufEnter' },
 			dependencies = {
-				{ "williamboman/mason.nvim", build = ":MasonUpdate", config = function() end },
+				{ "williamboman/mason.nvim", build = ":MasonUpdate", config = function() 
+                    require('mason').setup({
+                        github = {
+                            download_url_template = "https://ghproxy.com/https://github.com/%s/releases/download/%s/%s",
+                        }
+                    })
+                end },
 				{ 'williamboman/mason-lspconfig.nvim', config = function() end },
 				{'hrsh7th/cmp-nvim-lsp'},
 				{'j-hui/fidget.nvim', tag = 'legacy'},
@@ -204,6 +210,9 @@ function M.setup()
 		}
 	}, {
 		-- opts
+        git = {
+            url_format = "https://ghproxy.com/https://github.com/%s.git"
+        }
 	})
 end
 

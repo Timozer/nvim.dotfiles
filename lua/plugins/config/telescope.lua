@@ -56,6 +56,7 @@ function M.config()
     }
 
     require('telescope').load_extension('fzf')
+    require("telescope").load_extension("live_grep_args")
 
     require('dressing').setup({
         input = {

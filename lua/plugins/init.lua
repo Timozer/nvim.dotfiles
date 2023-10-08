@@ -70,9 +70,11 @@ function M.setup()
 			keys = {
 				{ "<leader>ff", ":Telescope find_files<cr>", mode = 'n', noremap = true },
 				{ "<leader>fb", ":Telescope buffers<cr>", mode = 'n', noremap = true },
-				{ "<leader>fg", ":Telescope live_grep<cr>", mode = 'n', noremap = true },
+				{ "<leader>fg", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>", mode = 'n', noremap = true },
+				-- { "<leader>fg", ":Telescope live_grep<cr>", mode = 'n', noremap = true },
 				{ "<leader>fh", ":Telescope help_tags<cr>", mode = 'n', noremap = true },
-				{ "<leader>fs", ":Telescope grep_string<cr>", mode = 'n', noremap = true },
+				{ "<leader>fs", ":lua require('telescope-live-grep-args.shortcuts').grep_word_under_cursor()<CR>", mode = 'n', noremap = true },
+				-- { "<leader>fs", ":Telescope grep_string<cr>", mode = 'n', noremap = true },
 			},
 			dependencies = {
                 -- for vim.ui.{input, select}
@@ -81,7 +83,13 @@ function M.setup()
 				{
 					'nvim-telescope/telescope-fzf-native.nvim',
 					build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build',
-				}
+				},
+                {
+                    "nvim-telescope/telescope-live-grep-args.nvim" ,
+                    -- This will not install any breaking changes.
+                    -- For major updates, this must be adjusted manually.
+                    version = "^1.0.0",
+                }
 			},
 			config = require('plugins.config.telescope').config
 		},
@@ -207,7 +215,18 @@ function M.setup()
 			'sindrets/diffview.nvim', 
 			dependencies = 'nvim-lua/plenary.nvim',
 			cmd = { 'DiffviewFileHistory', 'DiffviewOpen', 'DiffviewFocusFiles', }
-		}
+		},
+
+        -- dev
+   --      {
+   --          dir = '/home/wangzhenyu/.config/nvim/sr',
+   --          name = 'sr',
+   --          dev = true,
+			-- dependencies = {'nvim-lua/plenary.nvim'},
+			-- config = function ()
+			--     print('sr plugin')
+			-- end
+   --      }
 	}, {
 		-- opts
         git = {

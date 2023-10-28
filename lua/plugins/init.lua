@@ -18,7 +18,7 @@ function M.setup()
 		-- plugins
 		{ "nathom/filetype.nvim", config = require('plugins.config.filetype').config },
 		{ 'sainnhe/edge', config = require('plugins.config.edge').config },
-		{ "lukas-reineke/indent-blankline.nvim", config = require('plugins.config.indent_blankline').config },
+		{ "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {}, config = require('plugins.config.indent_blankline').config },
 		{
 			'Timozer/sline.nvim',
 			config = function()

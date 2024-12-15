@@ -5,7 +5,7 @@ function M.config()
     vim.api.nvim_command('set foldexpr=nvim_treesitter#foldexpr()')
 
     for _, config in pairs(require('nvim-treesitter.parsers').get_parser_configs()) do
-        config.install_info.url = config.install_info.url:gsub("https://github.com/", "https://ghproxy.com/https://github.com/")
+        config.install_info.url = config.install_info.url:gsub("https://github.com/", "https://ghp.ci/https://github.com/")
     end
 
     require'nvim-treesitter.configs'.setup {

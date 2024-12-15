@@ -7,7 +7,7 @@ function M.setup()
 			"git",
 			"clone",
 			"--filter=blob:none",
-			"https://ghproxy.com/https://github.com/folke/lazy.nvim.git",
+			"https://ghp.ci/https://github.com/folke/lazy.nvim.git",
 			"--branch=stable", -- latest stable release
 			lazypath,
 		})
@@ -112,7 +112,7 @@ function M.setup()
 				{ "williamboman/mason.nvim", build = ":MasonUpdate", config = function() 
                     require('mason').setup({
                         github = {
-                            download_url_template = "https://ghproxy.com/https://github.com/%s/releases/download/%s/%s",
+                            download_url_template = "https://ghp.ci/https://github.com/%s/releases/download/%s/%s",
                         }
                     })
                 end },
@@ -230,7 +230,7 @@ function M.setup()
 	}, {
 		-- opts
         git = {
-            url_format = "https://ghproxy.com/https://github.com/%s.git"
+            url_format = "https://ghp.ci/https://github.com/%s.git"
         }
 	})
 end

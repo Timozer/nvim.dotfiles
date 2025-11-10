@@ -21,3 +21,15 @@ Then open nvim to install plugins:
 ```sh 
 nvim
 ```
+
+# ThirdParties
+
+https://github.com/tree-sitter/tree-sitter/blob/master/crates/cli/README.md
+
+https://github.com/nvim-treesitter/nvim-treesitter-textobjects/tree/main
+
+https://github.com/neovim/neovim/pull/16600
+
+https://github.com/windwp/nvim-autopairs
+
+https://github.com/folke/snacks.nvim

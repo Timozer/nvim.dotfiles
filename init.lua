@@ -33,6 +33,7 @@ local basic_opts = {
     splitright=true,
     backup=false,
     swapfile=false,
+    mouse="",
 }
 
 require('core').SetOptions(basic_opts)

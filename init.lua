@@ -40,7 +40,6 @@ require('core').SetOptions(basic_opts)
 
 vim.g.mapleader = ","
 vim.g.maplocalleader = ","
-vim.g.did_load_filetypes = 1
 
 local basic_maps = {
     {
@@ -82,6 +81,35 @@ local basic_maps = {
 }
 
 require('core').SetKeymaps(basic_maps)
+
+-- filetype
+vim.filetype.add({
+    extension = {
+        h = function(path, bufnr)
+            local first_line = vim.api.nvim_buf_get_lines(bufnr, 0, 1, true);
+            if first_line:match('<iostream>') then
+            return "cpp"
+            end
+            return "c"
+        end,
+        lua = "lua",
+    },
+    filename = {
+        ["foo.(%a+)"] = function(path, bufnr, ext)
+            -- The 'ext' argument is the captured match from the filename pattern
+            return ext
+        end,
+        [".git/config"] = "gitconfig",
+        ["~/.config/mutt/muttrc"] = "muttrc",
+        ["README$"] = function(path, bufnr)
+            if string.find("#", vim.api.nvim_buf_get_lines(bufnr, 0, 1, true)) then
+                return "markdown"
+            end
+
+            -- no return means the filetype won't be set and to try the next method
+        end,
+    },
+})
 
 -- plugins
 require('plugins').setup()

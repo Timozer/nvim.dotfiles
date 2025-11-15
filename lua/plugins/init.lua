@@ -12,7 +12,7 @@ function M.setup()
             lazypath,
         })
     end
-    vim.opt.rtp:prepend(lazypath)	
+    vim.opt.rtp:prepend(lazypath)
 
     require("lazy").setup({
         -- plugins
@@ -51,7 +51,7 @@ function M.setup()
         },
         -- editing
         { 'junegunn/vim-easy-align', config = require('plugins.config.vim_easy_align').config },
-        { 'numToStr/Comment.nvim', 
+        { 'numToStr/Comment.nvim',
         keys = {
             { "<C-_>", ":lua require('Comment.api').toggle.linewise.current()<cr>", mode = 'n', noremap = true },
             { "<C-_>", '<ESC><CMD>lua require("Comment.api").toggle.linewise(vim.fn.visualmode())<CR>', mode = 'v', noremap = true },
@@ -95,23 +95,27 @@ function M.setup()
         lazy = false,
         branch = 'main',
         build = ':TSUpdate',
+        init = require('plugins.config.treesitter').init,
         config = require('plugins.config.treesitter').config,
-        -- dependencies = {
+        dependencies = {
             -- {
-                -- 'nvim-treesitter/nvim-treesitter-textobjects',
-                -- branch = 'main',
+            --    'nvim-treesitter/nvim-treesitter-textobjects',
+            --    branch = 'main',
             -- },
-        -- },
+            {
+                'JoosepAlviste/nvim-ts-context-commentstring',
+            }
+        },
     },
     -- lsp
     {
         'neovim/nvim-lspconfig',
         event = { 'BufEnter' },
         dependencies = {
-            { 
-                "williamboman/mason.nvim", 
-                build = ":MasonUpdate", 
-                config = function() 
+            {
+                "williamboman/mason.nvim",
+                build = ":MasonUpdate",
+                config = function()
                     require('mason').setup({
                         github = {
                             download_url_template = "https://github.com/%s/releases/download/%s/%s",
@@ -175,8 +179,8 @@ function M.setup()
         dependencies = {'nvim-lua/plenary.nvim'},
         config = require('plugins.config.gitsigns').config
     },
-    { 
-        'sindrets/diffview.nvim', 
+    {
+        'sindrets/diffview.nvim',
         dependencies = 'nvim-lua/plenary.nvim',
         cmd = { 'DiffviewFileHistory', 'DiffviewOpen', 'DiffviewFocusFiles', }
     },

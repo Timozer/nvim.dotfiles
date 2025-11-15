@@ -22,6 +22,20 @@ Then open nvim to install plugins:
 nvim
 ```
 
+# For NvimTreesitter
+nvim-treesitter need install `tree-sitter`, for detail info, please visit [this page](https://github.com/nvim-treesitter/nvim-treesitter/tree/main).
+
+document: [https://github.com/tree-sitter/tree-sitter/blob/master/crates/cli/README.md](https://github.com/tree-sitter/tree-sitter/blob/master/crates/cli/README.md)
+
+`tree-sitter-cli` install with `cargo`:
+```
+cargo install --locked tree-sitter-cli
+```
+or with `npm`:
+```
+npm install tree-sitter-cli
+```
+
 # ThirdParties
 
 https://github.com/tree-sitter/tree-sitter/blob/master/crates/cli/README.md

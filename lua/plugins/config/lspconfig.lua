@@ -36,7 +36,6 @@ function M.config()
         -- vim.bo[args.buf].omnifunc = nil
         -- Unmap K
         -- vim.keymap.del('n', 'K', { buffer = args.buf })
-        print("lsp attach set keymap")
         if keymap_exists('n', 'grn') then
             vim.keymap.del('n', 'grn', {})
         end

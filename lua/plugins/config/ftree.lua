@@ -38,7 +38,7 @@ function M.config()
                     }
                 },
                 {
-                    mode = 'n', lhs = 'i', rhs = '',
+                    mode = 'n', lhs = '<C-i>', rhs = '',
                     opts = {
                         callback = renderer.DoAction(actions.DirIn),
                         desc = 'Dir In',
@@ -48,7 +48,7 @@ function M.config()
                     }
                 },
                 {
-                    mode = 'n', lhs = 'o', rhs = '',
+                    mode = 'n', lhs = '<C-o>', rhs = '',
                     opts = {
                         callback = renderer.DoAction(actions.DirOut),
                         desc = 'Dir Out'
@@ -76,7 +76,7 @@ function M.config()
                     }
                 },
                 {
-                    mode = 'n', lhs = '<Del>', rhs = '',
+                    mode = 'n', lhs = 'dd', rhs = '',
                     opts = {
                         callback = renderer.DoAction(actions.RemoveFile),
                         desc = 'Remove File'
@@ -156,7 +156,7 @@ function M.config()
                     mode = 'n', lhs = 'm', rhs = '',
                     opts = {
                         callback = renderer.DoAction(actions.ToggleMark),
-                        desc = 'Show File Info'
+                        desc = 'Mark file'
                     }
                 },
                 {

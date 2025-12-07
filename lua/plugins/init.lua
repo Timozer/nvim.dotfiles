@@ -15,6 +15,34 @@ function M.setup()
     vim.opt.rtp:prepend(lazypath)
 
     require("lazy").setup({
+        {
+            "folke/snacks.nvim",
+            priority = 1000,
+            lazy = false,
+            ---@type snacks.Config
+            opts = {
+                bigfile = { enabled = false },
+                dashboard = { enabled = false },
+                explorer = { enabled = false },
+                indent = { enabled = false },
+                input = { enabled = true, },
+                notifier = { enabled = false, },
+                picker = { enabled = false },
+                quickfile = { enabled = false },
+                scope = { enabled = false },
+                scroll = { enabled = false },
+                statuscolumn = { enabled = false },
+                words = { enabled = false },
+                styles = {
+                    notification = {
+                        -- wo = { wrap = true } -- Wrap notifications
+                    },
+                }
+            },
+            config = function ()
+                vim.ui.input = Snacks.input.input
+            end
+        },
         -- plugins
         { 'sainnhe/edge', config = require('plugins.config.edge').config },
         { "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {}, config = require('plugins.config.indent_blankline').config },
@@ -77,6 +105,7 @@ function M.setup()
         },
         dependencies = {
             {'nvim-lua/plenary.nvim'},
+            {'nvim-telescope/telescope-ui-select.nvim'},
             {
                 'nvim-telescope/telescope-fzf-native.nvim',
                 build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build',
